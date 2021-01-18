@@ -1,0 +1,79 @@
+<div style="text-align: center;">
+  <div style="display:block;">
+    <h2>Sistema de Agencia de Autos <button type="button" class="btn btn-success" (click)="onLogout()">Cerrar Sesion</button></h2>
+    
+  </div>
+
+  <button type="button" class="btn btn-success" (click)="open(content)">Crear Auto
+    Nuevo</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>nombre</th>
+        <th>modelo</th>
+        <th>precio</th>
+        <th>Opciones</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of collection.data | paginate: config">
+        <td>{{item.id}}</td>
+        <td>{{item.nombre}}</td>
+        <td>{{item.modelo}}</td>
+        <td>{{item.precio}}</td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="eliminar(item)">Eliminar</button>
+          <button type="button" class="btn btn-primary" (click)="openEditar(content, item)">Editar</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Auto create/update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+
+          <form [formGroup]="autoForm">
+
+            <div class="form-group">
+              <label>id</label>
+              <input type="number" formControlName="id" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label> nombre</label>
+              <input type="text" formControlName="nombre" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label> modelo</label>
+              <input type="text" formControlName="modelo" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label> precio</label>
+              <input type="number" formControlName="precio" class="form-control">
+            </div>
+          </form>
+
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="guardarAuto()" *ngIf="!actualizar">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="actualizarAuto()"
+        *ngIf="actualizar">Actualizar</button>
+    </div>
+  </ng-template>
+</div>
